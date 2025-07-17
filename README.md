@@ -2,25 +2,25 @@
 
 ```
 my-extension/                  
-├── [.gitignore]              📄 [Игнорируемые Git-файлы]
-├── [manifest.json]           📄 [Манифест расширения]
-├── [README.md]               📄 [Описание проекта]
-├── assets/                   📁 [Статические ресурсы]
-│   └── icons/                📁 [Иконки]
-│       └── [icon48.png]      📄 [Иконка 48×48]
-└── src/                      📁 [Исходники расширения]
-    ├── background/           📁 [Сервисный работник]
-    │   └── [background.js]   📄 [Логика фоновых задач]
-    ├── popup/                📁 [Popup UI]
-    │   ├── [popup.html]      📄 [Разметка иконки]
-    │   └── [popup.js]        📄 [Скрипт попапа]
-    ├── options/              📁 [Страница настроек]
-    │   ├── [options.html]    📄 [Разметка страницы опций]
-    │   └── [options.js]      📄 [Скрипт страницы опций]
-    ├── services/             📁 [Сервисы и модули]
-    │   ├── [proxies.js]      📄 [Список прокси]
-    │   └── [secrets.js]      📄 [Креды]
-    └── utils/                📁 [Утилиты и общие модули]
-        └── [auth.js]         📄 [Логика учётных данных]
+├── [.gitignore]              
+├── [manifest.json]           
+├── [README.md]               
+├── assets/                   
+│   └── icons/                
+│       └── [icon48.png]       
+└── src/                       
+    ├── background/           
+    │   └── [background.js]   
+    ├── popup/                
+    │   ├── [popup.html]      
+    │   └── [popup.js]        
+    ├── options/              
+    │   ├── [options.html]    
+    │   └── [options.js]      
+    ├── services/             
+    │   ├── [proxies.js]      
+    │   └── [secrets.js]      
+    └── utils/                
+        └── [auth.js]         
 ```
 
