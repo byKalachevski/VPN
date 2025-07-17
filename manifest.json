@@ -3,16 +3,24 @@
   "name": "My Extension",
   "version": "1.0",
   "description": "Описание...",
-  "icons": { "48": "assets/icons/icon48.png" },
+  "icons": {
+    "48": "assets/icons/icon48.png"
+  },
   "action": {
     "default_popup": "src/popup/popup.html",
     "default_icon": "assets/icons/icon48.png"
   },
   "options_page": "src/options/options.html",
   "background": {
-    "service_worker": "src/background/background.js"
+    "service_worker": "src/background/background.js",
+    "type": "module"
   },
-  "permissions": ["proxy", "storage", "webRequest", "webRequestBlocking"],
+  "permissions": [
+    "proxy",
+    "storage",
+    "webRequest",
+    "webRequestBlocking"
+  ],
   "host_permissions": ["<all_urls>"]
 }
 
