@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Proxy Profiles</title>
+  <style>
+    /* Общие стили */
+    :root {
+      --bg: #1e1e1e;
+      --fg: #e0e0e0;
+      --fg-muted: #888;
+      --accent: #4caf50;
+      --divider: #333;
+      --gap: 8px;
+      --padding: 16px;
+      --radius: 4px;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: var(--padding);
+      width: 300px;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      font-size: 14px;
+    }
+    h1 {
+      margin: 0 0 var(--padding) 0;
+      font-size: 1.2rem;
+    }
+
+    /* Контейнер списков */
+    #profiles {
+    max-height: 400px;
+    overflow-y: auto;
+
+    /* IE/Edge */
+    -ms-overflow-style: none;
+    /* Firefox */
+    scrollbar-width: none;
+    }
+    #profiles::-webkit-scrollbar {
+    /* Chrome/Safari */
+    width: 0;
+    background: transparent;
+    }
+
+    /* Одна строка профиля */
+    .profile-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+      padding: var(--gap) 0;
+      border-bottom: 1px solid var(--divider);
+    }
+    .profile-label {
+      font-weight: 500;
+    }
+    .status {
+      width: 30px;
+      text-align: center;
+      color: var(--fg-muted);
+    }
+
+    /* Кастомный переключатель */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #555;
+      transition: 0.3s;
+      border-radius: 20px;
+    }
+    .slider::before {
+      content: "";
+      position: absolute;
+      height: 16px; width: 16px;
+      left: 2px; bottom: 2px;
+      background: #fff;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background: var(--accent);
+    }
+    input:checked + .slider::before {
+      transform: translateX(20px);
+    }
+  </style>
+</head>
+<body>
+  <h1>Profiles</h1>
+  <div id="profiles"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
+
+
+
