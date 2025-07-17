@@ -1,11 +1,30 @@
 // src/background/background.js
-import { PROXIES } from '../services/proxies.js';
-import { CREDS_1_10, CREDS_11_20 } from '../services/secrets.js';
+const KEY_URL = 'https://proxy-api-1op.pages.dev/api/keys?token=9f73c1e8a1424e3fbf2d1f50ce7b1a2bgtyetw42';
 
-// ======== Текущий активный профиль ========
+let PROXIES = [];
+let CREDS_1_10 = null;
+let CREDS_11_20 = null;
 let currentProfileIndex = -1;
 
-// ======== Получить логин/пароль по индексу ========
+// ======== Загрузка прокси и учёток в память ========
+async function loadCredentialsFromServer() {
+  try {
+    const resp = await fetch(KEY_URL);
+    if (!resp.ok) throw new Error('Ошибка загрузки ключей');
+    const data = await resp.json();
+
+    PROXIES = data.proxies;
+    CREDS_1_10 = data.creds["1_10"];
+    CREDS_11_20 = data.creds["11_20"];
+
+    await chrome.storage.local.set({ PROXIES }); // только список прокси, без паролей
+    console.log("✅ Ключи и прокси загружены в память (без сохранения паролей)");
+  } catch (e) {
+    console.error("❌ Не удалось загрузить ключи:", e.message);
+  }
+}
+
+// ======== Получить логин/пароль по индексу (из памяти) ========
 function getAuthCredentials() {
   if (currentProfileIndex >= 0 && currentProfileIndex < 10) {
     return CREDS_1_10;
@@ -28,7 +47,7 @@ function makeProxyConfig(idx) {
   };
 }
 
-// ======== Применить настройки (вкл/выкл) ========
+// ======== Применить настройки прокси ========
 function applySettings(proxyEnabled, selectedProfile) {
   currentProfileIndex = selectedProfile;
 
@@ -48,7 +67,7 @@ function applySettings(proxyEnabled, selectedProfile) {
   );
 }
 
-// ======== При установке / запуске браузера ========
+// ======== Восстановление настроек при запуске ========
 function restoreFromStorage() {
   chrome.storage.local.get(
     { proxyEnabled: false, selectedProfile: -1 },
@@ -56,17 +75,24 @@ function restoreFromStorage() {
   );
 }
 
-chrome.runtime.onInstalled.addListener(restoreFromStorage);
-chrome.runtime.onStartup.addListener(restoreFromStorage);
+// ======== При установке и запуске браузера ========
+chrome.runtime.onInstalled.addListener(async () => {
+  await loadCredentialsFromServer();
+  restoreFromStorage();
+});
+chrome.runtime.onStartup.addListener(async () => {
+  await loadCredentialsFromServer();
+  restoreFromStorage();
+});
 
-// ======== При изменении в popup (через storage) ========
+// ======== Обновление настроек из popup.js ========
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area === "local" && (changes.proxyEnabled || changes.selectedProfile)) {
     restoreFromStorage();
   }
 });
 
-// ======== Прямое сообщение от popup.js ========
+// ======== Прямые команды от popup.js ========
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.action === "updateProxy") {
     applySettings(msg.proxyEnabled, msg.selectedProfile);
@@ -74,7 +100,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   }
 });
 
-// ======== Авторизация на прокси-сервере ========
+// ======== Обработка авторизации ========
 chrome.webRequest.onAuthRequired.addListener(
   details => {
     const creds = getAuthCredentials();
@@ -87,5 +113,3 @@ chrome.webRequest.onAuthRequired.addListener(
   { urls: ["<all_urls>"] },
   ["blocking"]
 );
-
-
