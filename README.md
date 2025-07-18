@@ -14,12 +14,7 @@ my-extension/
     │   ├── [popup.html]      
     │   └── [popup.js]        
     ├── options/              
-    │   ├── [options.html]    
-    │   └── [options.js]      
-    ├── services/             
-    │   ├── [proxies.js]      
-    │   └── [secrets.js]      
-    └── utils/                
-        └── [auth.js]         
+        ├── [options.html]    
+        └── [options.js]                  
 ```
 
