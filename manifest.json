@@ -16,12 +16,15 @@
     "type": "module"
   },
   "permissions": [
-    "proxy",
-    "storage",
-    "webRequest",
-    "webRequestBlocking"
+  "proxy",
+  "storage",
+  "declarativeNetRequest"
   ],
-  "host_permissions": ["<all_urls>"]
+  "host_permissions": [
+    "<all_urls>"
+  ]
 }
+
+
 
 
