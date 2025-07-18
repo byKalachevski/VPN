@@ -13,7 +13,7 @@ my-extension/
     ├── popup/                
     │   ├── [popup.html]      
     │   └── [popup.js]        
-    ├── options/              
+    └──  options/              
         ├── [options.html]    
         └── [options.js]                  
 ```
